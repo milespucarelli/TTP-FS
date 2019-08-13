@@ -2,32 +2,91 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+#background {
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  background-attachment: scroll;
+  background-position: center;
+  position: relative;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.overlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background-color: rgba(0,0,0,0.3); /*dim the background*/
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#login-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  height: 45%;
+  width: 30%;
+  min-height: 335px;
+  min-width: 250px;
+  transform: translate(-50%, -50%);
+  background-color: rgba(193, 193, 193, 0.9);
+  border-radius: 15px;
+  box-shadow: 8px 8px 3px black;
+}
+
+#signup-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  height: 69%;
+  width: 35%;
+  min-height: 565px;
+  min-width: 250px;
+  transform: translate(-50%, -50%);
+  background-color: rgba(193, 193, 193, 0.9);
+  border-radius: 15px;
+  box-shadow: 8px 8px 3px black;
+}
+
+#login-inner-card, #signup-innner-card {
+  height: 100%;
+  width: 100%;
+  opacity: 1.0;
+}
+
+.head {
+  font-size: 36pt !important;
+  margin-bottom: 15px !important;
+  margin-top: 5% !important;
+}
+
+.form-input {
+  width: 80% !important;
+}
+
+.form-message {
+  margin: 0 80px !important;
+  padding: 5px !important;
+}
+
+#link-caption {
+  margin-top: 15px !important;
+}
+
+#submit-button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 24px;
+  color: #fff;
+  background-color: #6f942f;
+  box-shadow: 0 5px 5px #000;
+}
+
+#submit-button:active {
+  background-color: #6f942f;
+  box-shadow: 0 3px 5px #000;
+  transform: translateY(3px);
 }

@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import { Switch, Route, withRouter } from 'react-router-dom'
+import LoginSignupPage from './components/LoginSignupPage'
+//import Profile from './components/Profile'
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    user: undefined
+  }
+
+  setUser = (user) => {
+    this.setState({user: user})
+  }
+
+  componentDidMount() {
+    let token = localStorage.token;
+    fetch("http://localhost:3000/api/v1/get_user", {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        accepts: "application/json",
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.error) {
+          console.log(data.error)
+        } else {
+          this.setUser({user: data.user})
+        }
+      })
+      .catch(console.error)
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <Switch>
+          <Route path='/login' render={(props) => <LoginSignupPage {...props} user={this.state.user} setUser={this.setUser} />} />
+          <Route path='/signup' component={(props) => <LoginSignupPage {...props} user={this.state.user} setUser={this.setUser} />} />
+          {/*<Route path='/profile' component={Profile} />*/}
+        </Switch>
+      </div>
+    );
+  }
 }
 
-export default App;
+export default withRouter(App)
