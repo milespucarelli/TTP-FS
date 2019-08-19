@@ -97,7 +97,7 @@ class LoginSignupPage extends Component {
       <div id='background'>
         <div className='overlay'>
           { this.props.user ?
-            <Redirect to='/profile' /> :
+            <Redirect to='/portfolio' /> :
             clicked ?
             <Login
               email={email}

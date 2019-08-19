@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom'
 import LoginSignupPage from './components/LoginSignupPage'
-//import Profile from './components/Profile'
+import Portfolio from './components/Portfolio'
 import './App.css';
 
 class App extends Component {
@@ -40,7 +40,7 @@ class App extends Component {
         <Switch>
           <Route path='/login' render={(props) => <LoginSignupPage {...props} user={this.state.user} setUser={this.setUser} />} />
           <Route path='/signup' component={(props) => <LoginSignupPage {...props} user={this.state.user} setUser={this.setUser} />} />
-          {/*<Route path='/profile' component={Profile} />*/}
+          <Route path='/portfolio' component={Portfolio} />
         </Switch>
       </div>
     );
