@@ -2,15 +2,17 @@ import React, { Component } from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom'
 import LoginSignupPage from './components/LoginSignupPage'
 import Portfolio from './components/Portfolio'
+import Transaction from './components/Transaction'
 import './App.css';
 
 class App extends Component {
   state = {
-    user: undefined
+    user: undefined,
+    transactions: []
   }
 
   setUser = (user) => {
-    this.setState({user: user})
+    this.setState({user: user, transactions: user.transactions})
   }
 
   componentDidMount() {
@@ -28,7 +30,7 @@ class App extends Component {
         if (data.error) {
           console.log(data.error)
         } else {
-          this.setUser({user: data.user})
+          this.setState({user: data.user, transactions: data.user.transactions})
         }
       })
       .catch(console.error)
@@ -41,6 +43,7 @@ class App extends Component {
           <Route path='/login' render={(props) => <LoginSignupPage {...props} user={this.state.user} setUser={this.setUser} />} />
           <Route path='/signup' component={(props) => <LoginSignupPage {...props} user={this.state.user} setUser={this.setUser} />} />
           <Route path='/portfolio' component={Portfolio} />
+          <Route path='/transaction' component={(props) => <Transaction transactions={this.state.transactions} />} />
         </Switch>
       </div>
     );
