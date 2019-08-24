@@ -6,7 +6,7 @@ class Transaction extends Component {
   render() {
     return (
       <div>
-        <Table celled>
+        <Table celled striped>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Type</Table.HeaderCell>
