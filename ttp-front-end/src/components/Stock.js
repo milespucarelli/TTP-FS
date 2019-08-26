@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Card, Container, List, Button } from 'semantic-ui-react'
+import { Card, Container, List, Modal, Button, Statistic, Divider, Header } from 'semantic-ui-react'
+import Slider from '@material-ui/core/Slider';
 
 class Stock extends Component {
   state = {
@@ -7,7 +8,12 @@ class Stock extends Component {
     industry: '',
     website: '',
     ceo: '',
-    sector: ''
+    sector: '',
+    share: 1
+  }
+
+  changeHandler = (e) => {
+    this.setState({share: e.target.value})
   }
 
   componentDidMount() {
@@ -29,8 +35,8 @@ class Stock extends Component {
   }
 
   render() {
-    let {name, symbol} = this.props
-    let {price, industry, website, ceo, sector} = this.state
+    let {name, symbol, user, purchaseHandler} = this.props
+    let {price, industry, website, ceo, sector, share} = this.state
     return (
       <Card key={symbol}>
         <Card.Content>
@@ -60,7 +66,37 @@ class Stock extends Component {
           </Card.Description>
         </Card.Content>
         <Card.Content extra>
-          <Button basic color={price === 0 ? 'red' :'green'}>Buy</Button>
+          <Modal size='tiny' trigger={<Button basic color={price === 0 ? 'red' :'green'}>Buy</Button>} closeIcon>
+            <Modal.Header>{/*<Icon name='dollar sign'></Icon>*/}Buy Stock</Modal.Header>
+            <Modal.Content>
+              <Modal.Description>
+                <Statistic>
+                  <Statistic.Value>${user.balance}</Statistic.Value>
+                  <Statistic.Label>BALANCE</Statistic.Label>
+                </Statistic>
+                <Divider horizontal><h1>{symbol}</h1></Divider>
+                <Container textAlign='center'>
+                  <Header>{share}</Header>
+                  { /* <Slider
+                    defaultValue={1}
+                    value={share}
+                    onChange={this.changeHandler}
+                    step={1}
+                    min={1}
+                    max={parseInt(user.balance/price)}/> */ }
+                  <input
+                    type='range'
+                    value={share}
+                    onChange={this.changeHandler}
+                    min={1}
+                    max={parseInt(user.balance/price)} />
+                    <Header>{price}</Header>
+                    <Header>{(share * price).toFixed(2)}</Header>
+                    <Button onClick={() => purchaseHandler(user, symbol, share, price)}>Purchase</Button>
+                </Container>
+              </Modal.Description>
+            </Modal.Content>
+          </Modal>
         </Card.Content>
       </Card>
     );

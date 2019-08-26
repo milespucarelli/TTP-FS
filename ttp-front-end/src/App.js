@@ -8,12 +8,42 @@ import './App.css';
 
 class App extends Component {
   state = {
-    user: undefined,
+    user: '',
     transactions: []
   }
 
   setUser = (user) => {
     this.setState({user: user, transactions: user.transactions})
+  }
+
+  purchaseHandler = (user, symbol, share, price) => {
+    fetch("http://localhost:3000/api/v1/transactions", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        accepts: "application/json"
+      },
+      body: JSON.stringify(
+        {
+          transaction:
+          {
+            share: share,
+            price: price,
+            ticker: symbol,
+            user_id: user.id
+          }
+        })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.error) {
+          console.log(data.error)
+        } else {
+          this.setUser(data.user)
+          this.props.history.push('/transaction')
+        }
+      })
+      .catch(console.error)
   }
 
   componentDidMount() {
@@ -31,7 +61,7 @@ class App extends Component {
         if (data.error) {
           console.log(data.error)
         } else {
-          this.setState({user: data.user, transactions: data.user.transactions})
+          this.setUser(data.user)
         }
       })
       .catch(console.error)
@@ -45,7 +75,7 @@ class App extends Component {
           <Route path='/signup' component={(props) => <LoginSignupPage {...props} user={this.state.user} setUser={this.setUser} />} />
           <Route path='/portfolio' component={Portfolio} />
           <Route path='/transaction' component={(props) => <Transaction transactions={this.state.transactions} />} />
-          <Route path='/marketplace' component={Marketplace} />
+          <Route path='/marketplace' component={(props) => <Marketplace user={this.state.user} purchaseHandler={this.purchaseHandler}/>} />
         </Switch>
       </div>
     );

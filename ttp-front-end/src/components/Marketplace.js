@@ -55,13 +55,15 @@ class Marketplace extends Component {
   render() {
     let {searchTerm, upperRange, filteredStocks} = this.state
     return (
-      <Container>
-        <Input size='massive' icon='search' placeholder='Search...' value={searchTerm} onChange={this.searchHandler}/>
-        <Card.Group itemsPerRow={4}>
-          {this.state.loadedStocks.map(stock => (<Stock {...stock} key={stock.symbol} />))}
-        </Card.Group>
-        {upperRange < filteredStocks.length ? <Button color='green' onClick={this.clickHandler}>Load More</Button> : null}
-      </Container>
+      <div>
+        <Container>
+          <Input size='massive' icon='search' placeholder='Search...' value={searchTerm} onChange={this.searchHandler}/>
+          <Card.Group itemsPerRow={4}>
+            {this.state.loadedStocks.map(stock => (<Stock {...stock} {...this.props} key={stock.symbol} />))}
+          </Card.Group>
+          {upperRange < filteredStocks.length ? <Button color='green' onClick={this.clickHandler}>Load More</Button> : null}
+        </Container>
+      </div>
     );
   }
 
