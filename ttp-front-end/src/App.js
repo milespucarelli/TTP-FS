@@ -83,7 +83,7 @@ class App extends Component {
             <Route path='/login' render={(props) => <LoginSignupPage {...props} user={this.state.user} setUser={this.setUser} />} />
             <Route path='/signup' component={(props) => <LoginSignupPage {...props} user={this.state.user} setUser={this.setUser} />} />
             <Route path='/portfolio' component={(props) => <Portfolio user={this.state.user} transactions={this.state.transactions}/>} />
-            <Route path='/transactions' component={(props) => <Transaction transactions={this.state.transactions} />} />
+            <Route path='/transactions' component={(props) => <Transaction user={this.state.user} transactions={this.state.transactions} />} />
             <Route path='/marketplace' component={(props) => <Marketplace user={this.state.user} purchaseHandler={this.purchaseHandler}/>} />
           </Switch>
         </div>
