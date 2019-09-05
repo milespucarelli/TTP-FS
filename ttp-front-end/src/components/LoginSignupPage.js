@@ -94,26 +94,24 @@ class LoginSignupPage extends Component {
     } = this
 
     return (
-      <div id='background'>
-        <div className='overlay'>
-          { this.props.user ?
-            <Redirect to='/portfolio' /> :
-            clicked ?
-            <Login
-              email={email}
-              password={password}
-              changeHandler={changeHandler}
-              submitHandler={loginSubmitHandler}
-              clickHandler={clickHandler}/> :
-            <SignUp
-              email={email}
-              name={name}
-              password={password}
-              changeHandler={changeHandler}
-              submitHandler={signUpSubmitHandler}
-              clickHandler={clickHandler}/>
-          }
-        </div>
+      <div className='overlay'>
+        { this.props.user ?
+          <Redirect to='/portfolio' /> :
+          clicked ?
+          <Login
+            email={email}
+            password={password}
+            changeHandler={changeHandler}
+            submitHandler={loginSubmitHandler}
+            clickHandler={clickHandler}/> :
+          <SignUp
+            email={email}
+            name={name}
+            password={password}
+            changeHandler={changeHandler}
+            submitHandler={signUpSubmitHandler}
+            clickHandler={clickHandler}/>
+        }
       </div>
     )
   }

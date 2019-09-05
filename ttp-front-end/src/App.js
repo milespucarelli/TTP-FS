@@ -13,6 +13,12 @@ class App extends Component {
     transactions: []
   }
 
+  logOut = () => {
+    localStorage.removeItem('token')
+    this.setState({user: '', transactions: []})
+    this.props.history.push('/login')
+  }
+
   setUser = (user) => {
     this.setState({user: user, transactions: user.transactions})
   }
@@ -72,7 +78,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className='overlay'>
-          <NavBar/>
+          <NavBar logOut={this.logOut}/>
           <Switch>
             <Route path='/login' render={(props) => <LoginSignupPage {...props} user={this.state.user} setUser={this.setUser} />} />
             <Route path='/signup' component={(props) => <LoginSignupPage {...props} user={this.state.user} setUser={this.setUser} />} />

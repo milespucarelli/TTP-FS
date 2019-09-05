@@ -73,11 +73,14 @@ class Marketplace extends Component {
     let {searchTerm, upperRange, filteredStocks} = this.state
     return (
       <Container>
-        <Input size='massive' icon='search' placeholder='Search...' value={searchTerm} onChange={this.searchHandler}/>
-        <Card.Group itemsPerRow={3}>
+        <h1 className='page-banner'>Marketplace</h1>
+        <div id='searchbar'>
+          <Input size='massive' icon='search' placeholder='Search...' value={searchTerm} onChange={this.searchHandler}/>
+        </div>
+        <Card.Group itemsPerRow={4}>
           {this.state.loadedStocks.map((stock, index) => (<Stock {...stock} {...this.props} key={index} />))}
         </Card.Group>
-        {upperRange < filteredStocks.length ? <Button color='green' onClick={this.clickHandler}>Load More</Button> : null}
+        {upperRange < filteredStocks.length ? <Button id='loadmore' onClick={this.clickHandler}>Load More</Button> : null}
       </Container>
     );
   }

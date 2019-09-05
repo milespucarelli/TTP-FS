@@ -7,6 +7,7 @@ class Transaction extends Component {
   render() {
     return (
       <Container>
+        <h1 className='page-banner'>Transactions</h1>
         <Table celled striped>
           <Table.Header>
             <Table.Row>

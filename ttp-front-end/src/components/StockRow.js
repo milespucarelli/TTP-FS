@@ -16,12 +16,12 @@ class StockRow extends Component {
   }
 
   render() {
-    let {ticker, share} = this.props
+    let {ticker, share, clickHandler} = this.props
     let {currentPrice} = this.state
     let value = (share * currentPrice).toFixed(2)
     return (
       <Table.Row>
-        <Table.Cell>{ticker}</Table.Cell>
+        <Table.Cell className='portfolio-ticker' onClick={() => clickHandler(ticker)}>{ticker}</Table.Cell>
         <Table.Cell>{share}</Table.Cell>
         <Table.Cell>{currentPrice}</Table.Cell>
         <Table.Cell>{value}</Table.Cell>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Segment, Menu } from 'semantic-ui-react'
+import { Menu } from 'semantic-ui-react'
 import { withRouter } from 'react-router-dom'
 
 class NavBar extends Component {
@@ -14,9 +14,10 @@ class NavBar extends Component {
 
   render() {
     let {activeItem} = this.state
-    console.log(this.props.location)
+    let loc = this.props.location.pathname
     return (
-      <div className='navbar'>
+      <div className='navbar'
+        style={(loc === '/login' || loc === '/signup') ? {display: 'none'} : {}}>
         <Menu pointing secondary>
           <Menu.Item
             name='portfolio'
@@ -37,7 +38,7 @@ class NavBar extends Component {
             <Menu.Item
               name='logout'
               active={activeItem === 'logout'}
-              onClick={this.handleItemClick}
+              onClick={this.props.logOut}
             />
           </Menu.Menu>
         </Menu>
