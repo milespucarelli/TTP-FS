@@ -78,7 +78,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className='overlay'>
-          <NavBar logOut={this.logOut}/>
+          <NavBar user={this.state.user} logOut={this.logOut}/>
           <Switch>
             <Route path='/login' render={(props) => <LoginSignupPage {...props} user={this.state.user} setUser={this.setUser} />} />
             <Route path='/signup' component={(props) => <LoginSignupPage {...props} user={this.state.user} setUser={this.setUser} />} />

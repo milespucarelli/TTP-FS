@@ -35,6 +35,7 @@ class NavBar extends Component {
             onClick={this.clickHander}
           />
           <Menu.Menu position='right'>
+            <Menu.Item>Welcome, {this.props.user.name}!</Menu.Item>
             <Menu.Item
               name='logout'
               active={activeItem === 'logout'}
