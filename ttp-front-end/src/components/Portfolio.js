@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Grid, Statistic, Table } from 'semantic-ui-react'
+import { Redirect } from 'react-router-dom'
 import StockRow from './StockRow'
 import StockInfo from './StockInfo'
 
@@ -26,18 +27,18 @@ class Portfolio extends Component {
       stocks[transaction.ticker] = stocks[transaction.ticker] + transaction.share || transaction.share
     })
     let stocksArr = Object.keys(stocks).map(stock => ({ticker: stock, share: stocks[stock]}))
-    return (
+    return this.props.user ?
       <Container>
         <h1 className='page-banner'>Portfolio</h1>
         <Grid divided>
           <Grid.Row columns={2}>
-            <Grid.Column width={5} verticalAlign='middle'>
+            <Grid.Column width={6} verticalAlign='middle'>
               <Statistic inverted className='dropshadow'>
                 <Statistic.Value>${this.props.user.balance}</Statistic.Value>
                 <Statistic.Label>BALANCE</Statistic.Label>
               </Statistic>
             </Grid.Column>
-            <Grid.Column width={11}>
+            <Grid.Column width={10}>
               <StockInfo stock={this.state.stock} image={this.state.image}/>
             </Grid.Column>
           </Grid.Row>
@@ -54,15 +55,19 @@ class Portfolio extends Component {
                 </Table.Header>
                 <Table.Body>
                   {stocksArr.map(stock => (
-                      <StockRow ticker={stock.ticker} share={stock.share} clickHandler={this.clickHandler}/>
+                      <StockRow
+                        key={stock.ticker}
+                        ticker={stock.ticker}
+                        share={stock.share}
+                        clickHandler={this.clickHandler}/>
                     ))}
                 </Table.Body>
               </Table>
             </Grid.Column>
           </Grid.Row>
         </Grid>
-      </Container>
-    );
+      </Container> :
+      <Redirect to='/login' />
   }
 
 }

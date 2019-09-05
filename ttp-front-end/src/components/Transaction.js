@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Table, Container } from 'semantic-ui-react'
+import { Redirect } from 'react-router-dom'
 import TransactionRow from './TransactionRow'
 
 class Transaction extends Component {
 
   render() {
-    return (
+    return this.props.user ?
       <Container>
         <h1 className='page-banner'>Transactions</h1>
         <Table celled striped>
@@ -20,13 +21,13 @@ class Transaction extends Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {this.props.transactions.map(transaction => (
-                <TransactionRow {...transaction} />
+            {this.props.transactions.map((transaction, index) => (
+                <TransactionRow key={index} {...transaction} />
               ))}
           </Table.Body>
         </Table>
-      </Container>
-    );
+      </Container>:
+      <Redirect to='/login'/>
   }
 
 }

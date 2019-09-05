@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Input, Card, Button } from 'semantic-ui-react'
+import { Redirect } from 'react-router-dom'
 import Stock from './Stock'
 
 class Marketplace extends Component {
@@ -47,20 +48,6 @@ class Marketplace extends Component {
   }
 
   componentDidMount() {
-    // fetch('https://cloud.iexapis.com/stable/ref-data/symbols?token=pk_3b067f6bb3e243388641ac4995837a75&filter=symbol,name')
-    //   .then(res => res.json())
-    //   .then(stocks => {
-    //     console.log('first response', stocks)
-    //     fetch(`https://api.iextrading.com/1.0/tops/last`)
-    //       .then(res => res.json())
-    //       .then(data => {
-    //         console.log('second response',data)
-    //         let sortedData = data.sort((a,b) => a.symbol.localeCompare(b.symbol))
-    //         let sortedStocks = stocks.sort((a,b) => a.symbol.localeCompare(b.symbol))
-    //         sortedStocks = sortedStocks.map((stock, index) => ({symbol: stock.symbol, name: stock.name, price: sortedData[index].price}))
-    //         this.setState({stocks: sortedStocks, filteredStocks: sortedStocks, loadedStocks: sortedStocks.slice(0, 120)})
-    //       })
-    //   })
     fetch(`https://api.iextrading.com/1.0/tops/last`)
       .then(res => res.json())
       .then(data => {
@@ -71,7 +58,7 @@ class Marketplace extends Component {
 
   render() {
     let {searchTerm, upperRange, filteredStocks} = this.state
-    return (
+    return this.props.user ?
       <Container>
         <h1 className='page-banner'>Marketplace</h1>
         <div id='searchbar'>
@@ -81,8 +68,8 @@ class Marketplace extends Component {
           {this.state.loadedStocks.map((stock, index) => (<Stock {...stock} {...this.props} key={index} />))}
         </Card.Group>
         {upperRange < filteredStocks.length ? <Button id='loadmore' onClick={this.clickHandler}>Load More</Button> : null}
-      </Container>
-    );
+      </Container> :
+      <Redirect to='/login' />
   }
 
 }

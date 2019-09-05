@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Container, List, Accordion, Icon, Modal, Button, Statistic, Divider, Header } from 'semantic-ui-react'
-import Slider from '@material-ui/core/Slider';
+import { Card, Container, List, Accordion, Icon, Modal, Grid, Button, Statistic, Divider, Header } from 'semantic-ui-react'
 
 class Stock extends Component {
   state = {
@@ -27,30 +26,12 @@ class Stock extends Component {
           ceo: data.CEO,
           active: !this.state.active
         }))
+        .catch(err => this.setState({active: !this.state.active}))
     }
   }
 
   changeHandler = (e) => {
     this.setState({share: e.target.value})
-  }
-
-  componentDidMount() {
-    // fetch(`https://cloud.iexapis.com/stable/stock/${this.props.symbol}/company?token=pk_3b067f6bb3e243388641ac4995837a75&filter=industry,website,CEO,sector`)
-    //   .then(res => res.json())
-    //   .then(data => this.setState({
-    //     sector: data.sector,
-    //     industry: data.industry,
-    //     website: data.website,
-    //     ceo: data.CEO
-    //   }))
-    //   .catch(err => {return err})
-    // fetch(`https://api.iextrading.com/1.0/tops/last?symbols=${this.props.symbol}`)
-    //   .then(res => res.json())
-    //   .then(data => {
-    //     if (data[0]) {
-    //       this.setState({ price: data[0].price})
-    //     }
-    //   })
   }
 
   render() {
@@ -65,7 +46,7 @@ class Stock extends Component {
             <Container>
                 <Statistic size='mini'>
                   <Statistic.Label>PRICE</Statistic.Label>
-                  <Statistic.Value>{price === 0 ? 'n/a' : `$${price}`}</Statistic.Value>
+                  <Statistic.Value>{parseFloat(price) === 0.00 ? 'n/a' : `$${price}`}</Statistic.Value>
                 </Statistic>
                 <Accordion>
                   <Accordion.Title active={active} onClick={this.clickHandler}>
@@ -93,36 +74,55 @@ class Stock extends Component {
           </Card.Description>
         </Card.Content>
         <Card.Content extra>
-          <Modal size='tiny' trigger={<Button basic color={price === 0 ? 'red' :'green'}>Buy</Button>} closeIcon>
+          <Modal size='small' trigger={<Button basic color={parseFloat(price) === 0.00 ? 'red' :'green'}>Buy</Button>} closeIcon>
             <Modal.Header>{/*<Icon name='dollar sign'></Icon>*/}Buy Stock</Modal.Header>
-            <Modal.Content>
-              <Modal.Description>
-                <Statistic>
-                  <Statistic.Value>${user.balance}</Statistic.Value>
-                  <Statistic.Label>BALANCE</Statistic.Label>
-                </Statistic>
-                <Divider horizontal><h1>{symbol}</h1></Divider>
-                <Container textAlign='center'>
-                  <Header>{share}</Header>
-                  { /* <Slider
-                    defaultValue={1}
-                    value={share}
-                    onChange={this.changeHandler}
-                    step={1}
-                    min={1}
-                    max={parseInt(user.balance/price)}/> */ }
-                  <input
-                    type='range'
-                    value={share}
-                    onChange={this.changeHandler}
-                    min={1}
-                    max={parseInt(user.balance/price)} />
-                    <Header>{price}</Header>
-                    <Header>{(share * price).toFixed(2)}</Header>
-                    <Button onClick={() => purchaseHandler(user, symbol, share, price)}>Purchase</Button>
-                </Container>
-              </Modal.Description>
-            </Modal.Content>
+            { price === 0 ?
+              <Modal.Content>
+                <h3>Price information for this company is currently unavailable. Please check back later.</h3>
+              </Modal.Content> :
+              <Modal.Content>
+                <Modal.Description>
+                  <Grid columns={2}>
+                    <Grid.Row textAlign='center'>
+                      <Grid.Column>
+                        <Statistic>
+                          <Statistic.Value>${user.balance}</Statistic.Value>
+                          <Statistic.Label>BALANCE</Statistic.Label>
+                        </Statistic>
+                      </Grid.Column>
+                      <Grid.Column>
+                        <Statistic>
+                          <Statistic.Value>
+                            ${(user.balance - (parseInt(share) * parseFloat(price))).toFixed(2)}
+                          </Statistic.Value>
+                          <Statistic.Label>BALANCE AFTER PURCHASE</Statistic.Label>
+                        </Statistic>
+                      </Grid.Column>
+                    </Grid.Row>
+                  </Grid>
+                  <Divider horizontal><h1>{symbol}</h1></Divider>
+                  <Container textAlign='center'>
+                    <Header style={{margin: '0'}}>Number of Shares:</Header>
+                    <h1 style={{marginTop: '1%'}}>{share}</h1>
+                    <input
+                      type='range'
+                      value={share}
+                      onChange={this.changeHandler}
+                      min={1}
+                      max={parseInt(user.balance/parseFloat(price))} />
+                      <Header>Price Per Share: {`$${price}`}</Header>
+                      <Header>
+                        Total Price: {`$${(parseInt(share) * parseFloat(price)).toFixed(2)}`}
+                      </Header>
+                      <Button
+                        style={{color: 'white', backgroundColor: '#1055BC'}}
+                        onClick={() => purchaseHandler(user, symbol, share, price)}>
+                          Purchase
+                      </Button>
+                  </Container>
+                </Modal.Description>
+              </Modal.Content>
+            }
           </Modal>
         </Card.Content>
       </Card>
