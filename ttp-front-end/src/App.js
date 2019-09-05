@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom'
+import NavBar from './components/NavBar'
 import LoginSignupPage from './components/LoginSignupPage'
 import Portfolio from './components/Portfolio'
 import Transaction from './components/Transaction'
@@ -40,7 +41,7 @@ class App extends Component {
           console.log(data.error)
         } else {
           this.setUser(data.user)
-          this.props.history.push('/transaction')
+          this.props.history.push('/transactions')
         }
       })
       .catch(console.error)
@@ -70,13 +71,16 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Switch>
-          <Route path='/login' render={(props) => <LoginSignupPage {...props} user={this.state.user} setUser={this.setUser} />} />
-          <Route path='/signup' component={(props) => <LoginSignupPage {...props} user={this.state.user} setUser={this.setUser} />} />
-          <Route path='/portfolio' component={Portfolio} />
-          <Route path='/transaction' component={(props) => <Transaction transactions={this.state.transactions} />} />
-          <Route path='/marketplace' component={(props) => <Marketplace user={this.state.user} purchaseHandler={this.purchaseHandler}/>} />
-        </Switch>
+        <div className='overlay'>
+          <NavBar/>
+          <Switch>
+            <Route path='/login' render={(props) => <LoginSignupPage {...props} user={this.state.user} setUser={this.setUser} />} />
+            <Route path='/signup' component={(props) => <LoginSignupPage {...props} user={this.state.user} setUser={this.setUser} />} />
+            <Route path='/portfolio' component={(props) => <Portfolio user={this.state.user} transactions={this.state.transactions}/>} />
+            <Route path='/transactions' component={(props) => <Transaction transactions={this.state.transactions} />} />
+            <Route path='/marketplace' component={(props) => <Marketplace user={this.state.user} purchaseHandler={this.purchaseHandler}/>} />
+          </Switch>
+        </div>
       </div>
     );
   }
