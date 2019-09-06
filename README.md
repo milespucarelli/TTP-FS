@@ -5,6 +5,7 @@ My submission for the TTP Stage 2 Full Stack Application Build Assessment
 - React
 - Semantic UI
 - React Router
+- IEX & Cloud IEX APIs
 
 ### Back-End Frameworks & Technologies
 - Ruby On Rails
