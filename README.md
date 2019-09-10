@@ -29,15 +29,15 @@ Users can:
 2. Open two tabs in your terminal with the root of the directory open
 
 3. In the first tab run these commands in order:
-..- cd ./TTP-back-end
-..- bundle install
-..- rails db:create
-..- rails db:migrate
-..- rails s
+- cd ./TTP-back-end
+- bundle install
+- rails db:create
+- rails db:migrate
+- rails s
 
 4. In the second tab run these commands in order:
-..- cd ./ttp-front-end
-..- yarn (or npm install)
-..- yarn start (or npm start)
+- cd ./ttp-front-end
+- yarn (or npm install)
+- yarn start (or npm start)
 
 ### * Order Matters!!! Make sure you have PostgeSQL installed on your computer and your Ruby version matches the one listed in the GemFile *
