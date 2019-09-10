@@ -39,5 +39,7 @@ Users can:
 - cd ./ttp-front-end
 - yarn (or npm install)
 - yarn start (or npm start)
+- type y to confirm
+- navigate to localhost:3001/login
 
 ### * Order Matters!!! Make sure you have PostgeSQL installed on your computer and your Ruby version matches the one listed in the GemFile *
