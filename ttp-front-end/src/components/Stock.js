@@ -110,7 +110,7 @@ class Stock extends Component {
                       onChange={this.changeHandler}
                       min={1}
                       max={parseInt(user.balance/parseFloat(price))} />
-                      <Header>Price Per Share: {`$${price}`}</Header>
+                      <Header>Price Per Share: {`$${price.toFixed(2)}`}</Header>
                       <Header>
                         Total Price: {`$${(parseInt(share) * parseFloat(price)).toFixed(2)}`}
                       </Header>

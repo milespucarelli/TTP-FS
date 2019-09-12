@@ -12,6 +12,12 @@ class NavBar extends Component {
     this.setState({activeItem: name})
   }
 
+  componentDidUpdate() {
+    if (this.props.location.pathname.substring(1) !== this.state.activeItem) {
+      this.setState({activeItem: this.props.location.pathname.substring(1)})
+    }
+  }
+
   render() {
     let {activeItem} = this.state
     let loc = this.props.location.pathname

@@ -27,7 +27,9 @@ class TransactionRow extends Component {
         <Table.Cell>{share}</Table.Cell>
         <Table.Cell>{`$${currentPrice}`}</Table.Cell>
         <Table.Cell>{`$${parseFloat(price).toFixed(2)}`}</Table.Cell>
-        <Table.Cell>{performance > 0 ? `+${performance}` : performance}</Table.Cell>
+        <Table.Cell style={{color: performance > 0 ? 'green': performance < 0 ? 'red' : 'black' }}>
+          {performance > 0 ? `+${performance}` : performance}
+        </Table.Cell>
       </Table.Row>
     );
   }

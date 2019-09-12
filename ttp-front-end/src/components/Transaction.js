@@ -9,7 +9,7 @@ class Transaction extends Component {
     return this.props.user ?
       <Container>
         <h1 className='page-banner'>Transactions</h1>
-        <Table celled striped>
+        <Table celled striped style={{marginBottom: '10%'}}>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Type</Table.HeaderCell>
